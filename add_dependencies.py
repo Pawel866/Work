@@ -67,19 +67,19 @@ def install_packages_with_dependencies():
                     install_status_dict.update({install_status_app_name: installed})
 
 
-def check_dependency_installation():
-    # print all project dependencies installation status
+def check_packages_installation_status():
+    # print information about packages installation status
     for app in install_status_dict:
         print(f"{app} was {install_status_dict[app]}")
 
-        # raise value error if dependency not installed
+        # raise value error if package not installed
         if install_status_dict[app] == not_installed:
             raise ValueError(app, "installation failed")
 
-    # print when all dependencies installed with success
+    # print when all packages installed with success
     print("Installation finished with success")
 
 
 install_packages_without_dependencies()
 install_packages_with_dependencies()
-check_dependency_installation()
+check_packages_installation_status()
