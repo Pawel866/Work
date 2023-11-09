@@ -35,20 +35,20 @@ def install_all_packages_without_dependencies():
             install_package(package_name)
 
             # check if package is successfully installed, if yes change the status to installed
-            change_states_when_package_installed(package_name)
+            change_state_when_package_installed(package_name)
 
 
 def install_packages_with_dependencies():
     # iterate on all packages in install status dict
     packages_with_status = packages_install_status_dict.keys()
-    for packages_with_status in packages_with_status:
+    for package_with_status in packages_with_status:
 
         # check which package is not installed yet
-        if packages_install_status_dict[packages_with_status] == package_not_installed:
-            not_installed_package_name = packages_with_status
+        if packages_install_status_dict[package_with_status] == package_not_installed:
+            not_installed_package_name = package_with_status
 
             # check if not installed package have dependencies
-            package_dependencies = packages_dict[packages_with_status]["Requires"]
+            package_dependencies = packages_dict[package_with_status]["Requires"]
             for package_dependency in package_dependencies:
 
                 # check in install_status_dict if package dependencies are not installed
@@ -59,13 +59,13 @@ def install_packages_with_dependencies():
                     install_package(package_dependency)
 
                     # check if installation success and update app status to installed
-                    change_states_when_package_installed(package_dependency)
+                    change_state_when_package_installed(package_dependency)
 
                 # install package after its dependency packages installation
                 install_package(not_installed_package_name)
 
                 # check if package with dependencies was installed
-                change_states_when_package_installed(not_installed_package_name)
+                change_state_when_package_installed(not_installed_package_name)
 
 
 def install_package(package_name):
@@ -75,7 +75,7 @@ def install_package(package_name):
         print(f"{package_name} not installed")
 
 
-def change_states_when_package_installed(package_name):
+def change_state_when_package_installed(package_name):
     if importlib.util.resolve_name(package_name, None) is not None:
         packages_install_status_dict.update({package_name: package_installed})
 
